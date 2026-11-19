@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Captura de Datos</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      color: #1f2937;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      padding: 32px 24px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px; /* Evita el zoom automático en iPhone */
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      background-color: #f9fafb;
+      color: #111827;
+      transition: all 0.2s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #2563eb;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: #2563eb;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      background-color: #93c5fd;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #estado {
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-top: 16px;
+      min-height: 22px;
+      color: #059669;
+    }
+
+    #estado.guardando {
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Captura de Datos</h2>
+
+    <form id="formulario" action="https://script.google.com/macros/s/AKfycbzAzDdcha5KbIQ-0u2c9c9UZlRyCR0NvIcQh1PoiKxcacVyWJzgfb3Ci4Qi17A0uIoh/exec" method="POST" target="hidden_iframe" onsubmit="enviado()">
+      
+      <div class="form-group">
+        <label for="dia">Día:</label>
+        <input type="number" id="dia" name="dia" placeholder="Ej. 15" required min="1" max="120">
+      </div>
+
+      <div class="form-group">
+        <label for="dolar">Dólar:</label>
+        <input type="number" id="dolar" name="dolar" placeholder="Ej. 20" required min="1" max="120">
+      </div>
+
+      <button type="submit" id="btnEnviar">Enviar</button>
+    </form>
+
+    <p id="estado"></p>
+  </div>
+
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+  <script>
+    function enviado() {
+      const btn = document.getElementById('btnEnviar');
+      const estado = document.getElementById('estado');
+      
+      btn.disabled = true;
+      estado.className = 'guardando';
+      estado.textContent = 'Guardando...';
+      
+      setTimeout(function() {
+        estado.className = '';
+        estado.textContent = '¡Registro guardado con éxito!';
+        document.getElementById('formulario').reset();
+        btn.disabled = false;
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
